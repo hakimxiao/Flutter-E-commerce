@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/pages/home/main_food_page.dart';
 import 'package:get/get.dart';
+import 'helper/dependencies.dart' as dep;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await dep.init();
   runApp(const MainApp());
 }
 
