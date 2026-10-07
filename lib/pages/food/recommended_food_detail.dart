@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/recommended_product_controller.dart';
+import 'package:flutter_ecommerce/routes/routes_helper.dart';
+import 'package:flutter_ecommerce/utils/app_constants.dart';
 import 'package:flutter_ecommerce/utils/colors.dart';
 import 'package:flutter_ecommerce/utils/dimensions.dart';
 import 'package:flutter_ecommerce/widgets/app_icon.dart';
 import 'package:flutter_ecommerce/widgets/expandable_text_widget.dart';
 import 'package:flutter_ecommerce/widgets/text/big_text.dart';
+import 'package:get/get.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({super.key});
+  final int pageId;
+  const RecommendedFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<RecommendedProductController>().recommendedProductList[pageId];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 70,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.clear),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(RoutesHelper.getInitial());
+                  },
+                  child: AppIcon(icon: Icons.clear),
+                ),
                 AppIcon(icon: Icons.shopping_cart_outlined),
               ],
             ),
@@ -37,7 +51,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child: BigText(size: Dimensions.font26, text: 'Chinese side'),
+                  child: BigText(size: Dimensions.font26, text: product.name!),
                 ),
               ),
             ),
@@ -45,8 +59,8 @@ class RecommendedFoodDetail extends StatelessWidget {
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/image/food0.png',
+              background: Image.network(
+                '${AppConstants.BASE_URL}${AppConstants.UPLOAD_URL}${product.img}',
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -60,10 +74,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     left: Dimensions.width20,
                     right: Dimensions.width20,
                   ),
-                  child: ExpandableTextWidget(
-                    text:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias id rem voluptatem eaque blanditiis voluptates est harum, aperiam, inventore, iusto animi aliquid nemo illum. Corrupti totam officiis beatae labore unde corporis autem, esse ullam quae explicabo praesentium eius accusantium! Cum beatae voluptatum ipsum deserunt assumenda nisi soluta nesciunt expedita quos autem, reiciendis, iure veniam excepturi pariatur voluptates ullam possimus eos corrupti, provident dolor quam. Reprehenderit odio sequi qui ratione omnis veritatis quo animi unde. Numquam cum facilis quae consectetur inventore similique, fugiat ducimus consequuntur iure minima pariatur enim perferendis at ratione delectus itaque asperiores, sapiente nihil. Explicabo incidunt officia reiciendis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias id rem voluptatem eaque blanditiis voluptates est harum, aperiam, inventore, iusto animi aliquid nemo illum. Corrupti totam officiis beatae labore unde corporis autem, esse ullam quae explicabo praesentium eius accusantium! Cum beatae voluptatum ipsum deserunt assumenda nisi soluta nesciunt expedita quos autem, reiciendis, iure veniam excepturi pariatur voluptates ullam possimus eos corrupti, provident dolor quam. Reprehenderit odio sequi qui ratione omnis veritatis quo animi unde. Numquam cum facilis quae consectetur inventore similique, fugiat ducimus consequuntur iure minima pariatur enim perferendis at ratione delectus itaque asperiores, sapiente nihil. Explicabo incidunt officia reiciendis!',
-                  ),
+                  child: ExpandableTextWidget(text: product.description!),
                 ),
               ],
             ),
@@ -90,7 +101,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   iconSize: Dimensions.iconSize24,
                 ),
                 BigText(
-                  text: 'Rp.29.000 X 0',
+                  text: 'Rp.${product.price} X 0',
                   color: AppColors.mainBlackColor,
                   size: Dimensions.font26,
                 ),

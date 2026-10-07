@@ -1,8 +1,7 @@
 import 'package:flutter_ecommerce/pages/food/popular_food_detail.dart';
 import 'package:flutter_ecommerce/pages/food/recommended_food_detail.dart';
 import 'package:flutter_ecommerce/pages/home/main_food_page.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:get/get.dart';
 
 class RoutesHelper {
   static const String initial = "/";
@@ -10,22 +9,26 @@ class RoutesHelper {
   static const String recommendedFood = "/recommended-food";
 
   static String getInitial() => '$initial';
-  static String getPopularFood() => '$popularFood';
-  static String getRecommendedFood() => '$recommendedFood';
+  static String getPopularFood(int pageId) => '$popularFood?pageId=$pageId';
+  static String getRecommendedFood(int pageId) =>
+      '$recommendedFood?pageId=$pageId';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => MainFoodPage()),
     GetPage(
       name: popularFood,
       page: () {
-        return PopularFoodDetail();
+        var pageId = Get.parameters['pageId'];
+
+        return PopularFoodDetail(pageId: int.parse(pageId!));
       },
       transition: Transition.fadeIn,
     ),
     GetPage(
       name: recommendedFood,
       page: () {
-        return RecommendedFoodDetail();
+        var pageId = Get.parameters['pageId'];
+        return RecommendedFoodDetail(pageId: int.parse(pageId!));
       },
       transition: Transition.fadeIn,
     ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/popular_product_controller.dart';
 import 'package:flutter_ecommerce/pages/home/main_food_page.dart';
+import 'package:flutter_ecommerce/utils/app_constants.dart';
 import 'package:flutter_ecommerce/utils/colors.dart';
 import 'package:flutter_ecommerce/utils/dimensions.dart';
 import 'package:flutter_ecommerce/widgets/app_column.dart';
@@ -9,10 +11,14 @@ import 'package:flutter_ecommerce/widgets/text/big_text.dart';
 import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({super.key});
+  final int pageId;
+  const PopularFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<PopularProductController>().popularProductList[pageId];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -27,7 +33,9 @@ class PopularFoodDetail extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/image/food0.png'),
+                  image: NetworkImage(
+                    '${AppConstants.BASE_URL}${AppConstants.UPLOAD_URL}${product.img}',
+                  ),
                 ),
               ),
             ),
@@ -70,17 +78,14 @@ class PopularFoodDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppColumn(text: 'Chinese text'),
+                  AppColumn(text: product.name!),
                   SizedBox(height: Dimensions.height20),
                   BigText(text: 'Introduce'),
                   SizedBox(height: Dimensions.height20),
                   // expandable text widget
                   Expanded(
                     child: SingleChildScrollView(
-                      child: ExpandableTextWidget(
-                        text:
-                            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias id rem voluptatem eaque blanditiis voluptates est harum, aperiam, inventore, iusto animi aliquid nemo illum. Corrupti totam officiis beatae labore unde corporis autem, esse ullam quae explicabo praesentium eius accusantium! Cum beatae voluptatum ipsum deserunt assumenda nisi soluta nesciunt expedita quos autem, reiciendis, iure veniam excepturi pariatur voluptates ullam possimus eos corrupti, provident dolor quam. Reprehenderit odio sequi qui ratione omnis veritatis quo animi unde. Numquam cum facilis quae consectetur inventore similique, fugiat ducimus consequuntur iure minima pariatur enim perferendis at ratione delectus itaque asperiores, sapiente nihil. Explicabo incidunt officia reiciendis!',
-                      ),
+                      child: ExpandableTextWidget(text: product.description!),
                     ),
                   ),
                 ],
@@ -140,7 +145,7 @@ class PopularFoodDetail extends StatelessWidget {
                 color: AppColors.mainColor,
               ),
               child: BigText(
-                text: 'Rp. 25.000 | Add to cart',
+                text: 'Rp.${product.price} | Add to cart',
                 color: Colors.white,
               ),
             ),
