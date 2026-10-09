@@ -44,7 +44,7 @@ class PopularProductController extends GetxController {
   }
 
   int checkQuantity(int quantity) {
-    if (quantity < 0) {
+    if ((_inCartItems + quantity) < 0) {
       Get.snackbar(
         'Item count',
         'You can\'t reduce more! ',
@@ -52,7 +52,7 @@ class PopularProductController extends GetxController {
         colorText: Colors.white,
       );
       return 0;
-    } else if (quantity > 20) {
+    } else if ((_inCartItems + quantity) > 20) {
       Get.snackbar(
         'Item count',
         'You can\'t add more! ',
@@ -65,23 +65,33 @@ class PopularProductController extends GetxController {
     }
   }
 
-  void initProduct(CartController cart) {
+  void initProduct(ProductModel product, CartController cart) {
     _quantity = 0;
     _inCartItems = 0;
     _cart = cart;
+    var exist = false;
+    exist = _cart.existInCart(product);
+    if (exist) {
+      _inCartItems = _cart.getQuantity(product);
+    }
   }
 
   void addItem(ProductModel product) {
-    if (quantity > 0) {
-      _cart.addItem(product, quantity);
-      _quantity = 0;
-    } else {
-      Get.snackbar(
-        "Item count",
-        "You should at least add an item in cart",
-        backgroundColor: AppColors.mainColor,
-        colorText: Colors.white,
-      );
-    }
+    // if (quantity > 0) {
+    _cart.addItem(product, quantity);
+    _quantity = 0;
+    _inCartItems = _cart.getQuantity(product);
+    // } else {
+    //   Get.snackbar(
+    //     "Item count",
+    //     "You should at least add an item in cart",
+    //     backgroundColor: AppColors.mainColor,
+    //     colorText: Colors.white,
+    //   );
+    // }
+  }
+
+  int get getTotalItems {
+    return _cart.totalItems;
   }
 }
