@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/cart_controller.dart';
 import 'package:flutter_ecommerce/controllers/popular_product_controller.dart';
 import 'package:flutter_ecommerce/controllers/recommended_product_controller.dart';
 import 'package:flutter_ecommerce/routes/routes_helper.dart';
@@ -18,6 +19,10 @@ class RecommendedFoodDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     var product =
         Get.find<RecommendedProductController>().recommendedProductList[pageId];
+    Get.find<PopularProductController>().initProduct(
+      product,
+      Get.find<CartController>(),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,7 +40,40 @@ class RecommendedFoodDetail extends StatelessWidget {
                   },
                   child: AppIcon(icon: Icons.clear),
                 ),
-                AppIcon(icon: Icons.shopping_cart_outlined),
+                GetBuilder<PopularProductController>(
+                  builder: (controller) {
+                    return Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        Get.find<PopularProductController>().getTotalItems >= 1
+                            ? Positioned(
+                                right: 0,
+                                top: 0,
+                                child: AppIcon(
+                                  icon: Icons.circle,
+                                  size: 20,
+                                  iconColor: Colors.transparent,
+                                  backgroundColor: AppColors.mainColor,
+                                ),
+                              )
+                            : Container(),
+                        Get.find<PopularProductController>().getTotalItems >= 1
+                            ? Positioned(
+                                right: 3,
+                                top: 3,
+                                child: BigText(
+                                  text: Get.find<PopularProductController>()
+                                      .getTotalItems
+                                      .toString(),
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
             bottom: PreferredSize(
@@ -160,22 +198,27 @@ class RecommendedFoodDetail extends StatelessWidget {
                       ),
                       child: Icon(Icons.favorite, color: AppColors.mainColor),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        top: Dimensions.height20,
-                        bottom: Dimensions.height20,
-                        left: Dimensions.width20,
-                        right: Dimensions.width20,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          Dimensions.radius20,
+                    GestureDetector(
+                      onTap: () {
+                        controller.addItem(product);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                          top: Dimensions.height20,
+                          bottom: Dimensions.height20,
+                          left: Dimensions.width20,
+                          right: Dimensions.width20,
                         ),
-                        color: AppColors.mainColor,
-                      ),
-                      child: BigText(
-                        text: 'Rp. ${product.price} | Add to cart',
-                        color: Colors.white,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Dimensions.radius20,
+                          ),
+                          color: AppColors.mainColor,
+                        ),
+                        child: BigText(
+                          text: 'Rp. ${product.price} |  Add to cart',
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],
