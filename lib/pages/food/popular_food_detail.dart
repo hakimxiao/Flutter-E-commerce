@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/controllers/cart_controller.dart';
 import 'package:flutter_ecommerce/controllers/popular_product_controller.dart';
-import 'package:flutter_ecommerce/pages/home/main_food_page.dart';
+import 'package:flutter_ecommerce/routes/routes_helper.dart';
 import 'package:flutter_ecommerce/utils/app_constants.dart';
 import 'package:flutter_ecommerce/utils/colors.dart';
 import 'package:flutter_ecommerce/utils/dimensions.dart';
@@ -54,43 +54,44 @@ class PopularFoodDetail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () => Get.to(MainFoodPage()),
+                  onTap: () => Get.toNamed(RoutesHelper.getInitial()),
                   child: AppIcon(icon: Icons.arrow_back_ios),
                 ),
-                // GetBuilder<PopularProductController>(
-                //   builder: (controller) {
-                //     return Stack(
-                //       children: [
-                //         AppIcon(icon: Icons.shopping_cart_outlined),
-                //         Get.find<PopularProductController>().getTotalItems >= 1
-                //             ? Positioned(
-                //                 right: 0,
-                //                 top: 0,
-                //                 child: AppIcon(
-                //                   icon: Icons.circle,
-                //                   size: 20,
-                //                   iconColor: Colors.transparent,
-                //                   backgroundColor: AppColors.mainColor,
-                //                 ),
-                //               )
-                //             : Container(),
-                //         Get.find<PopularProductController>().getTotalItems >= 1
-                //             ? Positioned(
-                //                 right: 3,
-                //                 top: 3,
-                //                 child: BigText(
-                //                   text: Get.find<PopularProductController>()
-                //                       .getTotalItems
-                //                       .toString(),
-                //                   size: 12,
-                //                   color: Colors.white,
-                //                 ),
-                //               )
-                //             : Container(),
-                //       ],
-                //     );
-                //   },
-                // ),
+                GetBuilder<PopularProductController>(
+                  builder: (controller) {
+                    return GestureDetector(
+                      onTap: () => Get.toNamed(RoutesHelper.getCartPage()),
+                      child: Stack(
+                        children: [
+                          AppIcon(icon: Icons.shopping_cart_outlined),
+                          controller.getTotalItems >= 1
+                              ? Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: AppIcon(
+                                    icon: Icons.circle,
+                                    size: 20,
+                                    iconColor: Colors.transparent,
+                                    backgroundColor: AppColors.mainColor,
+                                  ),
+                                )
+                              : Container(),
+                          controller.getTotalItems >= 1
+                              ? Positioned(
+                                  right: 3,
+                                  top: 3,
+                                  child: BigText(
+                                    text: controller.getTotalItems.toString(),
+                                    size: 12,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
