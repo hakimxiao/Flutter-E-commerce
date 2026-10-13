@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/pages/home/main_food_page.dart';
 import 'package:flutter_ecommerce/utils/colors.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,46 +11,55 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  List pages = [
-    MainFoodPage(),
-    SizedBox(child: Center(child: Text('Next Page 1'))),
-    SizedBox(child: Center(child: Text('Next Page 2'))),
-    SizedBox(child: Center(child: Text('Next Page 3'))),
-  ];
-
-  void onTapNav(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: AppColors.mainColor,
-        unselectedItemColor: Colors.amberAccent,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedFontSize: 0.0,
-        unselectedFontSize: 0.0,
-        currentIndex: _selectedIndex,
-        onTap: onTapNav,
-
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+    return MaterialApp(
+      title: 'Persistent Bottom Navigation Bar Demo',
+      home: PersistentTabView(
+        tabs: [
+          PersistentTabConfig(
+            screen: MainFoodPage(),
+            item: ItemConfig(
+              icon: Icon(Icons.home_filled),
+              inactiveIcon: Icon(Icons.home_outlined),
+              title: "Home",
+              activeForegroundColor: Colors.black54,
+              activeColorSecondary: AppColors.mainColor,
+            ),
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.archive), label: 'History'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+          PersistentTabConfig(
+            screen: SizedBox(child: Center(child: Text('Next Page 2'))),
+            item: ItemConfig(
+              icon: Icon(Icons.archive),
+              inactiveIcon: Icon(Icons.archive_outlined),
+              title: "History",
+              activeForegroundColor: Colors.black54,
+              activeColorSecondary: AppColors.mainColor,
+            ),
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Me'),
+          PersistentTabConfig(
+            screen: SizedBox(child: Center(child: Text('Next Page 3'))),
+            item: ItemConfig(
+              icon: Icon(Icons.shopping_cart),
+              inactiveIcon: Icon(Icons.shopping_cart_outlined),
+              title: "Cart",
+              activeForegroundColor: Colors.black54,
+              activeColorSecondary: AppColors.mainColor,
+            ),
+          ),
+          PersistentTabConfig(
+            screen: SizedBox(child: Center(child: Text('Next Page 4'))),
+            item: ItemConfig(
+              icon: Icon(Icons.person),
+              inactiveIcon: Icon(Icons.person_outline),
+              title: "Me",
+              activeForegroundColor: Colors.black54,
+              activeColorSecondary: AppColors.mainColor,
+            ),
+          ),
         ],
+        navBarBuilder: (navBarConfig) =>
+            Style8BottomNavBar(navBarConfig: navBarConfig),
       ),
     );
   }
