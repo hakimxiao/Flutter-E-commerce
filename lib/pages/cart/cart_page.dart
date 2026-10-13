@@ -79,7 +79,10 @@ class CartPage extends StatelessWidget {
 
                             if (popularIndex >= 0) {
                               Get.toNamed(
-                                RoutesHelper.getPopularFood(popularIndex),
+                                RoutesHelper.getPopularFood(
+                                  popularIndex,
+                                  'cartpage',
+                                ),
                               );
                             } else {
                               var recommendedIndex =
@@ -90,6 +93,7 @@ class CartPage extends StatelessWidget {
                               Get.toNamed(
                                 RoutesHelper.getRecommendedFood(
                                   recommendedIndex,
+                                  'cartpage',
                                 ),
                               );
                             }
