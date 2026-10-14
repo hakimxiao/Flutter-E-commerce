@@ -17,12 +17,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<PopularProductController>().getPopularProductList();
-    Get.find<RecommendedProductController>().getRecommendedProductList();
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: RoutesHelper.getInitial(),
-      getPages: RoutesHelper.routes,
+    return GetBuilder<PopularProductController>(
+      builder: (_) {
+        return GetBuilder<RecommendedProductController>(
+          builder: (_) {
+            return GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              initialRoute: RoutesHelper.getSplashScreen(),
+              getPages: RoutesHelper.routes,
+            );
+          },
+        );
+      },
     );
   }
 }

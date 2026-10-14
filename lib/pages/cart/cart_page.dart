@@ -229,8 +229,8 @@ class CartPage extends StatelessWidget {
         builder: (cartController) => Container(
           height: Dimensions.bottomHeightBar,
           padding: EdgeInsets.only(
-            top: Dimensions.height30,
-            bottom: Dimensions.height30,
+            top: Dimensions.height20,
+            bottom: Dimensions.height20,
             left: Dimensions.width20,
             right: Dimensions.width20,
           ),
@@ -259,7 +259,8 @@ class CartPage extends StatelessWidget {
                   children: [
                     SizedBox(width: Dimensions.width10 / 2),
                     BigText(
-                      text: 'Rp.${cartController.totalAmount.toString()}',
+                      // text: 'Rp.${cartController.totalAmount.toString()}',
+                      text: 'Rp.20.000',
                     ),
                     SizedBox(width: Dimensions.width10 / 2),
                   ],
