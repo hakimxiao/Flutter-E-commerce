@@ -10,4 +10,5 @@ class AppConstants {
   static const String UPLOAD_URL = "/uploads/";
 
   static const String TOKEN = 'DBToken';
+  static const String SHARED_PREFERENCES_KEY_FOR_CART_LIST = 'cart-list';
 }

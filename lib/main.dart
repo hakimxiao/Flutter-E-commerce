@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/cart_controller.dart';
 import 'package:flutter_ecommerce/controllers/popular_product_controller.dart';
 import 'package:flutter_ecommerce/controllers/recommended_product_controller.dart';
 import 'package:flutter_ecommerce/routes/routes_helper.dart';
@@ -17,6 +18,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<CartController>().getCartData();
+
     return GetBuilder<PopularProductController>(
       builder: (_) {
         return GetBuilder<RecommendedProductController>(
