@@ -11,4 +11,6 @@ class AppConstants {
 
   static const String TOKEN = 'DBToken';
   static const String SHARED_PREFERENCES_KEY_FOR_CART_LIST = 'cart-list';
+  static const String SHARED_PREFERENCES_KEY_FOR_CART_HISTORY_LIST =
+      'cart-history-list';
 }
