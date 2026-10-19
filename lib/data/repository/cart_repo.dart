@@ -13,10 +13,12 @@ class CartRepo {
   List<String> cartHistory = [];
 
   void addToCartList(List<CartModel> cartList) {
+    var time = DateTime.now().toString();
     cart = [];
 
     // Convert object to string because shared preferences only except a string
     for (var cartItem in cartList) {
+      cartItem.time = time;
       cart.add(jsonEncode(cartItem));
     }
 
