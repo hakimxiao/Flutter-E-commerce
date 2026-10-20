@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/pages/cart/cart_history.dart';
 import 'package:flutter_ecommerce/pages/cart/cart_page.dart';
 import 'package:flutter_ecommerce/pages/home/main_food_page.dart';
 import 'package:flutter_ecommerce/utils/colors.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           PersistentTabConfig(
-            screen: SizedBox(child: Center(child: Text('Next Page 2'))),
+            screen: SizedBox(child: CartHistory()),
             item: ItemConfig(
               icon: Icon(Icons.archive),
               inactiveIcon: Icon(Icons.archive_outlined),
